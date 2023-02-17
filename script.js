@@ -3,17 +3,19 @@ const result = document.getElementById('result')
 const operation = document.getElementById('operation')
 const equals = document.getElementById('equals')
 
-let value = result.value
-let numbersArray = []
-let numbResult = ""
-let numA = ""
-let numB = ""
-let operator = ""
-
+let value = result.value;
+let numbersArray = [];
+let numbResult = "";
+let numA = "";
+let numB = "";
+let operator = "";
+let calculo;
+let asd = 2.34
 const plus = (num1,num2) => eval(`${num1} + ${num2}`) 
 const minus = (num1,num2) => eval(`${num1} - ${num2}`) 
 const times = (num1,num2) => eval(`${num1} * ${num2}`) 
-const obelus = (num1,num2) => eval(`${num1} / ${num2}`) 
+const divide = (num1,num2) => eval(`${num1} / ${num2}`) 
+const timesMinusOne = (num1) => eval(`${num1} * -1`) 
 
 
 const appearOperation = (number) => {
@@ -25,6 +27,7 @@ const desappearOperation = () => operation.style.display = 'none';
 
 
 const operations = (op) => {
+    numB = numbResult;
     switch (op) {
         case 'clearEntry': 
             numbResult = ""; numB = "";
@@ -37,24 +40,75 @@ const operations = (op) => {
             operator = op
             numA = numbResult;
             numB = `${numA} +`;
-
             appearOperation(numB);
             break;
+
+        case 'minus': 
+            operator = op
+            numA = numbResult;
+            numB = `${numA} -`;
+            appearOperation(numB);
+            break
+
+        case 'times': 
+            operator = op
+            numA = numbResult;
+            numB = `${numA} ×`;
+            appearOperation(numB);
+            break
+
+        case 'divide': 
+            operator = op
+            numA = numbResult;
+            numB = `${numA} ÷`;
+            appearOperation(numB);
+            break
+        case 'timesMinusOne': 
+            operator = op
+            numA = numbResult;
+            numB = `${numA} × -1`;
+            appearOperation(numB);
+            break
+        case 'dot': 
+            let dota = "."
+            if (numbResult.length === 0) {
+                numbResult += '0.'
+            } else if (!numbResult.includes(dota)){
+                numbResult += '.'
+            }
+            break
+
         case 'equals':
-            numB = numbResult;
 
             switch (operator) {
                 case 'plus':   
-                    let calculo = plus(numA, numB)
+                    calculo = plus(numA, numB);
                     numbResult = `${calculo}`;
-                    operation.value = `${numbResult} +`
-                    result.value = numbResult;
                     break;
-                    
 
+                case 'minus':  
+                    calculo = minus(numA, numB);
+                    numbResult = `${calculo}`;
+
+                    break; 
+
+                case 'times':  
+                    calculo = times(numA, numB);
+                    numbResult = `${calculo}`;
+
+                    break; 
+                case 'divide':  
+                    calculo = divide(numA, numB);
+                    numbResult = `${calculo}`;
+                    break;
+                case 'timesMinusOne':  
+                    calculo = timesMinusOne(numA);
+                    numbResult = `${calculo}`;
+                    break;  
             }
+            desappearOperation();
+            numB = ''
 
-            
     }
 }
 
@@ -65,8 +119,10 @@ const operations = (op) => {
 buttons.forEach( function (button) {
     button.addEventListener('click', function () {
         const number = parseInt(button.id)
-        if (!number) {
+        
+        if (!Number.isInteger(number)) {
             operations(button.id)
+            
 
         } else {
             numbResult+= number
