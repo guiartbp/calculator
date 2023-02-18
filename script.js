@@ -64,11 +64,11 @@ const operations = (op) => {
             appearOperation(numB);
             break
         case 'timesMinusOne': 
-            operator = op
             numA = numbResult;
-            numB = `${numA} × -1`;
-            appearOperation(numB);
-            break
+            calculo = timesMinusOne(numA);
+            numbResult = `${calculo}`;
+            console.log(numbResult)
+            break; 
         case 'dot': 
             let dota = "."
             if (numbResult.length === 0) {
@@ -77,6 +77,7 @@ const operations = (op) => {
                 numbResult += '.'
             }
             break
+            
 
         case 'equals':
 
@@ -101,10 +102,7 @@ const operations = (op) => {
                     calculo = divide(numA, numB);
                     numbResult = `${calculo}`;
                     break;
-                case 'timesMinusOne':  
-                    calculo = timesMinusOne(numA);
-                    numbResult = `${calculo}`;
-                    break;  
+                 
             }
             desappearOperation();
             numB = ''
